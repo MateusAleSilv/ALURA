@@ -1,0 +1,8 @@
+C:\Users\mateu\Desktop\Projetos\ecommerce\common-kafka\src\main\java\br\com\mktech\ecommerce\Message.java
+C:\Users\mateu\Desktop\Projetos\ecommerce\common-kafka\src\main\java\br\com\mktech\ecommerce\GsonSerializer.java
+C:\Users\mateu\Desktop\Projetos\ecommerce\common-kafka\src\main\java\br\com\mktech\ecommerce\KafkaDispatcher.java
+C:\Users\mateu\Desktop\Projetos\ecommerce\common-kafka\src\main\java\br\com\mktech\ecommerce\CorrelationId.java
+C:\Users\mateu\Desktop\Projetos\ecommerce\common-kafka\src\main\java\br\com\mktech\ecommerce\KafkaService.java
+C:\Users\mateu\Desktop\Projetos\ecommerce\common-kafka\src\main\java\br\com\mktech\ecommerce\ConsumerFunction.java
+C:\Users\mateu\Desktop\Projetos\ecommerce\common-kafka\src\main\java\br\com\mktech\ecommerce\MessageAdapter.java
+C:\Users\mateu\Desktop\Projetos\ecommerce\common-kafka\src\main\java\br\com\mktech\ecommerce\GsonDeserializer.java
