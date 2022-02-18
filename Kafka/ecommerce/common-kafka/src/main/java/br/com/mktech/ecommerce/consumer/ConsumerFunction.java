@@ -1,5 +1,6 @@
-package br.com.mktech.ecommerce;
+package br.com.mktech.ecommerce.consumer;
 
+import br.com.mktech.ecommerce.Message;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 
 public interface ConsumerFunction<T> {

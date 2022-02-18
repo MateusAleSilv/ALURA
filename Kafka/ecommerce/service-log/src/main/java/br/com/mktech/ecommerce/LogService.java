@@ -1,5 +1,6 @@
 package br.com.mktech.ecommerce;
 
+import br.com.mktech.ecommerce.consumer.KafkaService;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.serialization.StringDeserializer;

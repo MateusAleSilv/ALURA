@@ -1,5 +1,7 @@
 package br.com.mktech.ecommerce;
 
+import br.com.mktech.ecommerce.dispatcher.KafkaDispatcher;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

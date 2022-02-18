@@ -1,5 +1,7 @@
-package br.com.mktech.ecommerce;
+package br.com.mktech.ecommerce.consumer;
 
+import br.com.mktech.ecommerce.Message;
+import br.com.mktech.ecommerce.MessageAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.apache.kafka.common.serialization.Deserializer;

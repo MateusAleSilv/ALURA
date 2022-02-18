@@ -1,0 +1,15 @@
+package br.com.mktech.ecommerce.consumer;
+
+import br.com.mktech.ecommerce.Message;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+
+public interface ConsumerService<T> {
+
+    //you may argue that a ConsumerException would be better
+    // and its ok, in can be better
+    void parse(ConsumerRecord<String, Message<T>> record) throws Exception;
+
+    String getTopic();
+
+    String getConsumerGroup();
+}
