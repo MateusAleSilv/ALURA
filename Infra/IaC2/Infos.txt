@@ -1,0 +1,164 @@
+Terraform
+Caso você ainda não tenha instalado o Terraform, segue um pequeno tutorial de como fazê-lo.
+
+Ubuntu
+Para instalar no Ubuntu, utilize o comando abaixo:
+
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+sudo apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+sudo apt install terraformCOPIAR CÓDIGO
+MacOS
+Para instalar no MacOS, instale através do brew com o comando abaixo:
+
+brew tap hashicorp/tap
+brew install hashicorp/tap/terraformCOPIAR CÓDIGO
+Windows
+Para instalar no Windows existem 2 possibilidades:
+
+Chocolatey
+choco install terraformCOPIAR CÓDIGO
+Instalação manual
+Basta ir até a página de download, selecionar se qual a versão a ser baixada, dando preferência para 64-bit, extrair o arquivo e instalá-lo.
+
+Python
+Caso você ainda não tenha instalado o Python, segue um pequeno tutorial de como fazê-lo.
+
+Ubuntu
+Para instalar no Ubuntu, utilize o comando abaixo:
+
+sudo apt install python3COPIAR CÓDIGO
+MacOS
+Para instalar no MacOS, instale através do brew com o comando abaixo:
+
+brew install python3COPIAR CÓDIGO
+Windows
+Para instalar no Windows existem 2 possibilidades:
+
+Chocolatey
+choco install pythonCOPIAR CÓDIGO
+Instalação manual
+Basta ir até a página de download, selecionar se qual a versão a ser baixada, extrair o arquivo e instalá-lo.
+
+Ansible
+Caso você ainda não tenha instalado o Ansible, segue um pequeno tutorial de como fazê-lo.
+
+Instalando Ansible
+Ubuntu
+Para instalar no Ubuntu, utilize o comando abaixo:
+
+sudo apt update
+sudo apt install software-properties-common
+sudo add-apt-repository --yes --update ppa:ansible/ansible
+sudo apt-get install ansibleCOPIAR CÓDIGO
+MacOS
+Para instalar no MacOS, instale através do brew com o comando abaixo:
+
+brew install ansibleCOPIAR CÓDIGO
+Windows
+O Ansible não tem suporte nativo para Windows, porém é possível utilizar o pacote para Python para executá-lo.
+
+python -m pip install --user ansible
+python -m pip install --user paramikoCOPIAR CÓDIGO
+AWS CLI
+Caso você ainda não tenha instalado a AWS CLI, basta ir a página da AWS CLI e seguir os procedimentos para o seu sistema operacional.
+
+Depois de instalado você pode configurar a AWS usando o comando aws configure onde será requisitado a chave secreta (secret key) que pode ser criada nessa pagina clicando em “criar chave de acesso” na aba “credenciais do AWS IAM”.
+
+
+Em fase de desenvolvimento da aplicação, é interessante deixarmos todas as portas abertas, assim temos acesso a todas as partes da máquina e também permitimos que requisições de qualquer lugar possam ser respondidas pela máquina, então vamos configurar o grupo de segurança para que a máquina possa responder a todas as requisições.
+
+Vamos começar indo para o painel da EC2 para acessar as configurações do grupo de segurança. Nós podemos acessar essas configurações através da seção “Recursos” e em seguida “Grupos de segurança”, ou através do menu lateral na seção “Rede e segurança” e em seguida “Security groups".
+
+Vamos selecionar o único item da lista. Ele tem um campo chamado “Nome do grupo de segurança” e esse campo deve ter o valor “default”. Na parte inferior da tela aparecerá uma aba com as configurações do grupo de segurança, nesta aba temos informações de “Regras de entrada” e “Regras de saída”, que são as configurações de conexão das máquinas que estão nesse grupo.
+
+Vamos em “Regras de entrada” e em seguida em “Edit inbound rules” (Editar regras de entrada). Na nova janela, podemos criar novas regras clicando em "Adicionar regra”. Lembrando que cada regra só contempla 1 endereço, então não podemos colocar todos em uma única regra. Assim que criarmos uma nova regra temos que selecionar o “Tipo”, que no nosso caso é “Todo o tráfego” e a “Origem” que é “anywhere-IPv4”, vamos fazer o mesmo processo de criar uma nova regra para o “anywhere-IPv6”.
+
+Agora podemos seguir o mesmo caminho para as “Regras de saída”. As diferenças são que ao invés de “Edit inbound rules” será “Edit outbound rules” e no lugar de “Origem” teremos “Destino”.
+
+
+O Terraform pode criar arquivos e executar comandos dentro da instância que ele está criando e, para tal, precisamos apenas inserir algumas poucas linhas para permitir isso.
+
+Para mostrarmos para o terraform que queremos executar comandos, vamos criar uma linha dentro da declaração da instância com o conteúdo:
+
+user_data = <<-EOF
+                EOFCOPIAR CÓDIGO
+Assim podemos colocar os nossos comandos dentro dos EOF. Esses comandos vão ser executados da mesma forma que um script seria executado, então é interessante começarmos com #!/bin/bash para identificar com qual tipo de console queremos executá-lo.
+
+Durante o vídeo, utilizamos esse método para ir até uma pasta, utilizando o comando cd e criamos um arquivo usando o comando echo e o operador >, e então executamos um servidor http usando o nohup busybox com o operador &.
+
+Então o user_data ficou com essas informações:
+
+user_data = <<-EOF
+                #!/bin/bash
+                cd /home/ubuntu
+                echo “<h1>Mensagem a ser mostrada</h1>” > index.js
+                nohup busybox httpd -f -p 8080 &
+                EOF
+
+
+
+O Ansible tem uma grande integração com o Python, então ele tem comandos prontos para certas ações, como instalar dependências com o pip e pip3, e criar ambientes virtuais, também conhecidos como “Virtual environments", ”Virtual envs” ou “Venv”, para instalar as dependências dentro deles, permitindo que a máquina tenha apenas o necessário na hora da execução e minimizando conflitos entre bibliotecas.
+
+Para criarmos uma dessas “venv” com o Ansible necessitamos de uma única linha, se formos instalar bibliotecas do Python, ou duas linhas para serem apenas criadas. Quando criamos uma “venv” e instalamos bibliotecas, essas bibliotecas são instaladas dentro desse ambiente virtualizado. Contudo, se não especificarmos uma “venv” durante a instalação, as bibliotecas serão instaladas no sistema como um todo.
+
+Para fazermos a criação, devemos adicionar o parâmetro virtualenv: dentro da tarefa pip: e a tarefa terá uma sintaxe parecida com:
+
+- name: Instalando dependências com pip ( podemos trocar o nome da tarefa)
+    pip:
+      virtualenv: /home/ubuntu/tcc/venvCOPIAR CÓDIGO
+Colocando o caminho onde queremos criar a “venv” e depois o parâmetro, e colocando outros parâmetros ou a continuação do código em seguida, como:
+
+- name: Instalando dependências com pip ( podemos trocar o nome da tarefa)
+    pip:
+      virtualenv: /home/ubuntu/tcc/venv
+      name:
+        - django
+        - djangorestframework
+        ...COPIAR CÓDIGO
+Com isso, o Ansible tentará iniciar a “venv” e, caso não encontre ela, criará uma.
+
+
+
+Algumas funções específicas de bibliotecas, como a django-admin, não estão presentes nativamente no Ansible, então podemos utilizar o parâmetro shell: para executar as funções que queremos.
+
+Para utilizarmos o shell: devemos criar uma nova tarefa e colocar todos os comandos que queremos executar dentro de aspas, simples ou duplas, ou de acentos graves, assim o Ansible consegue distinguir o que deve ser executado.
+
+Então a linha de comando pode ser escrita das seguintes formas:
+
+- name: Iniciando o projeto
+    shell: 'comando 1; comando 2; comando 3'COPIAR CÓDIGO
+- name: Iniciando o projeto
+    shell: 'comando 1'
+    shell: 'comando 2'COPIAR CÓDIGO
+Com todos os comandos sendo escritos em uma única linha, e separados por “;”, eles são executado em sucessão, então a tarefa:
+
+- name: Iniciando o projeto
+    shell: 'cd /home/ubuntu; cat index.html'COPIAR CÓDIGO
+Começará indo até a pasta /home/ubuntu, e em seguida mostrará o conteúdo do index.html que está na pasta /home/ubuntu.
+
+Já se escrevermos o código em mais de uma linha, desta forma:
+
+- name: Iniciando o projeto
+    shell: 'cd /home/ubuntu'
+    shell: 'cat index.html'COPIAR CÓDIGO
+Os comandos anteriores não interferem no novo, então o primeiro comando irá até a pasta /home/ubuntu, enquanto o segundo comando será executado em /, então devemos tomar cuidado com como escrevemos os comandos shell.
+
+
+
+Durante a inicialização do projeto, feito através do comando django-admin startproject setup /home/ubuntu/tcc/ podemos encontrar um erro, e esse erro é sobre substituir arquivos já existentes. No caso do Django, a substituição não é realizada para se manter a segurança e certificar que os dados do projeto atual não serão perdidos. Contudo, isso impede o nosso playbook de continuar a sua execução.
+
+Para podermos continuar a execução nesse caso, podemos usar um outro parâmetro, o ignore_errors: yes. Esse parâmetro vai fazer com que o playbook continue independente do comando ter retornado OK, changed ou fail.
+
+Então, para o nosso playbook se tornar mais versátil e poder se executado quantas vezes quisermos, é interessante colocar esse novo parâmetro na tarefa “Iniciando o projeto”. Desse jeito, teríamos:
+
+- name: Iniciando o projeto
+    shell: '. /home/ubuntu/tcc/venv/bin/activate; django-admin startproject setup /home/ubuntu/tcc/'
+    ignore_errors: yesCOPIAR CÓDIGO
+Contudo, tome cuidado, pois diferentes bibliotecas ou programas podem ter características diferentes, substituindo o projeto atual, ou ignorando erros sérios que podem comprometer a integridade do projeto como um todo.
+
+Por exemplo, se colocássemos esse parâmetro e o django-admin não conseguisse iniciar o projeto, teríamos um erro mais para a frente, onde o Ansible não encontraria o arquivo de configurações para fazer as alterações necessárias, mostrando assim outro erro. Mas, sem a presença do primeiro erro, não saberíamos o que realmente está acontecendo.
+
+Então, o ato de ignorar erros pode, e deve, ser usado em algumas situações, mas sempre com muito cuidado!
+
+
+
